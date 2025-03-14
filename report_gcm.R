@@ -1,8 +1,8 @@
 ## Prepare GCM plots and tables for report
 
-## Before: otoliths.csv (data), gcm_3_agepred.csv, gcm_3_coefs.csv,
-##         gcm_3_conv.csv, gcm_3_curve.csv, gcm_3_residuals.csv (output)
-## After:  gcm_3.pdf (report)
+## Before: otoliths.csv (data), gcm_agepred.csv, gcm_coefs.csv, gcm_conv.csv,
+##         gcm_curve.csv, gcm_residuals.csv (output)
+## After:  gcm.pdf (report)
 
 library(TAF)
 library(areaplot)      # confplot
@@ -10,18 +10,18 @@ source("utilities.R")  # plot.conv
 
 mkdir("report")
 
-agepred <- read.taf("output/gcm_3_agepred.csv")
-coefs <- read.taf("output/gcm_3_coefs.csv")
-conv <- read.taf("output/gcm_3_conv.csv")
-curve <- read.taf("output/gcm_3_curve.csv")
+agepred <- read.taf("output/gcm_agepred.csv")
+coefs <- read.taf("output/gcm_coefs.csv")
+conv <- read.taf("output/gcm_conv.csv")
+curve <- read.taf("output/gcm_curve.csv")
 otoliths <- read.taf("data/otoliths.csv")
-res <- read.taf("output/gcm_3_residuals.csv")
+res <- read.taf("output/gcm_residuals.csv")
 
 blue <- paste0(palette()[4], "b0")
 red <- paste0(palette()[2], "b0")
 black <- "#000000b0"
 
-pdf("report/gcm_3.pdf", width=10, height=4)
+pdf("report/gcm.pdf", width=10, height=4)
 par(mfrow=c(1,3))
 plot(NA, xlim=c(0,4), ylim=c(20,85), xlab="Age (yr)", ylab="Length (cm)")
 title(main=paste0("L0 = ", round(coefs$L0),

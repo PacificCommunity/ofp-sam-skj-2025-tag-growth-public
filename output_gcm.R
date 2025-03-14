@@ -1,8 +1,8 @@
 ## Extract GCM results of interest, write TAF output tables
 
-## Before: gcm_3_results.RData (model)
-## After:  gcm_3_agepred.csv, gcm_3_coefs.csv, gcm_3_conv.csv, gcm_3_curve.csv,
-##         gcm_3_residuals.csv, gcm_3_sigma.csv (output)
+## Before: gcm_results.RData (model)
+## After:  gcm_agepred.csv, gcm_coefs.csv, gcm_conv.csv, gcm_curve.csv,
+##         gcm_residuals.csv, gcm_sigma.csv (output)
 
 library(TAF)
 library(RTMB)
@@ -12,7 +12,7 @@ source("utilities.R")  # ss
 mkdir("output")
 
 ## Read model results
-load("model/gcm_3_results.RData")
+load("model/gcm_results.RData")
 
 ## Extract coefficients
 coefs <-
@@ -83,10 +83,10 @@ empiricalOld <- sd(res$Residual[res$Length_hat >= midpoint])
 sigma <- data.frame(empiricalYoung, empiricalOld, coverage)
 
 ## Export tables
-write.taf(agepred, "output/gcm_3_agepred.csv")
-write.taf(coefs, "output/gcm_3_coefs.csv")
-write.taf(conv, "output/gcm_3_conv.csv")
-write.taf(curve, "output/gcm_3_curve.csv")
-write.taf(otofit, "output/gcm_3_otofit.csv")
-write.taf(res, "output/gcm_3_residuals.csv")
-write.taf(sigma, "output/gcm_3_sigma.csv")
+write.taf(agepred, "output/gcm_agepred.csv")
+write.taf(coefs, "output/gcm_coefs.csv")
+write.taf(conv, "output/gcm_conv.csv")
+write.taf(curve, "output/gcm_curve.csv")
+write.taf(otofit, "output/gcm_otofit.csv")
+write.taf(res, "output/gcm_residuals.csv")
+write.taf(sigma, "output/gcm_sigma.csv")

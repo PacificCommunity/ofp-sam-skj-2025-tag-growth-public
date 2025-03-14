@@ -1,7 +1,7 @@
 ## Run GCM analysis, write model results
 
 ## Before: otoliths.csv, tags.csv (data)
-## After:  gcm_3_results.RData (model)
+## After:  gcm_results.RData (model)
 
 library(TAF)
 library(RTMB)
@@ -47,4 +47,4 @@ report <- model$report()
 sdreport <- sdreport(model, getReportCovariance=FALSE)
 
 ## Save results
-save(model, fit, report, sdreport, file="model/gcm_3_results.RData")
+save(model, fit, report, sdreport, file="model/gcm_results.RData")

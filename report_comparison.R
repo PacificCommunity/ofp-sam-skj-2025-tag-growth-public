@@ -1,8 +1,8 @@
 ## Compare growth curves
 
-## Before: gcm_3_conv.csv, gcm_3_curve.csv, richards_conv.csv,
-##         richards_curve.csv, schnute_3_conv.csv, schnute_3_curve.csv,
-##         vonbert_conv.csv, vonbert_curve.csv (output)
+## Before: gcm_conv.csv, gcm_curve.csv, richards_conv.csv, richards_curve.csv,
+##         schnute_3_conv.csv, schnute_3_curve.csv, vonbert_conv.csv,
+##         vonbert_curve.csv (output)
 ## After:  comparison.csv, comparison.pdf (report)
 
 library(TAF)
@@ -11,21 +11,21 @@ mkdir("report")
 
 # Read convergence statistics
 conv <- list()
-conv$gcm_3 <- read.taf("output/gcm_3_conv.csv")
+conv$gcm <- read.taf("output/gcm_conv.csv")
 conv$richards <- read.taf("output/richards_conv.csv")
 conv$schnute_3 <- read.taf("output/schnute_3_conv.csv")
 conv$vonbert <- read.taf("output/vonbert_conv.csv")
 
 # Read growth curve
 curve <- list()
-curve$gcm_3 <- read.taf("output/gcm_3_curve.csv")
+curve$gcm <- read.taf("output/gcm_curve.csv")
 curve$richards <- read.taf("output/richards_curve.csv")
 curve$schnute_3 <- read.taf("output/schnute_3_curve.csv")
 curve$vonbert <- read.taf("output/vonbert_curve.csv")
 
 # Read coefficients
 coefs <- list()
-coefs$gcm_3 <- read.taf("output/gcm_3_coefs.csv")
+coefs$gcm <- read.taf("output/gcm_coefs.csv")
 coefs$richards <- read.taf("output/richards_coefs.csv")
 coefs$schnute_3 <- read.taf("output/schnute_3_coefs.csv")
 coefs$vonbert <- read.taf("output/vonbert_coefs.csv")
@@ -33,7 +33,7 @@ coefs$vonbert <- read.taf("output/vonbert_coefs.csv")
 # Plot growth curves
 pdf("report/comparison.pdf", width=8, height=8)
 plot(NA, xlim=c(0,4), ylim=c(20,85), xlab="Age (yr)", ylab="Length (cm)")
-lines(Length~Age, curve$gcm_3, lwd=2, col=3)
+lines(Length~Age, curve$gcm, lwd=2, col=3)
 lines(Length~Age, curve$richards, lwd=2, col=5)
 lines(Length~Age, curve$schnute_3, lwd=2, col=6)
 lines(Length~Age, curve$vonbert, lwd=2, col=7)
@@ -46,14 +46,14 @@ comparison <- data.frame(model=names(conv), coefs=c(4,4,3,3),
                          nll=round(sapply(conv, `[[`, "objective"), 3),
                          hessian=sapply(conv, `[[`, "pdHess"), row.names=NULL)
 
-comparison$est[comparison$model=="gcm_3"] <-
-  paste0("L0=", round(coefs$gcm_3$L0, 3),
-         ", rmax=", round(coefs$gcm_3$rmax, 3),
-         ", k=", round(coefs$gcm_3$k, 3),
-         ", t50=", round(coefs$gcm_3$t50, 3))
-comparison$sigma[comparison$model=="gcm_3"] <-
-  paste(formatC(coefs$gcm_3$sigma_min, format="f", digits=3),
-        formatC(coefs$gcm_3$sigma_max, format="f", digits=3), sep=", ")
+comparison$est[comparison$model=="gcm"] <-
+  paste0("L0=", round(coefs$gcm$L0, 3),
+         ", rmax=", round(coefs$gcm$rmax, 3),
+         ", k=", round(coefs$gcm$k, 3),
+         ", t50=", round(coefs$gcm$t50, 3))
+comparison$sigma[comparison$model=="gcm"] <-
+  paste(formatC(coefs$gcm$sigma_min, format="f", digits=3),
+        formatC(coefs$gcm$sigma_max, format="f", digits=3), sep=", ")
 
 comparison$est[comparison$model=="richards"] <-
   paste0("L1=", round(coefs$richards$L1, 3),
